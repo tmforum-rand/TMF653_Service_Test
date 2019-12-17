@@ -1,0 +1,108 @@
+{
+    "ServiceTest": {
+        "list": {
+            "samples": [
+                {
+                    "description": "Here's an example of a request for retrieving service tests.",
+                    "fields": "id,category,name,state", 
+                    "filtering": "mode=PROACTIVE&state=Completed", 
+                    "content-type": "application/json", 
+                    "response" : "$_ServiceTest_list_1_response"
+                }
+            ]
+        }, 
+        "retrieve": {
+            "samples" : [
+                {
+                    "description" : "Here's an example of a request for retrieving a specific service test.",
+                    "content-type": "application/json",
+                    "objectId": "3112",
+                    "response" : "$_ServiceTest_retrieve_1_response"
+        		}
+            ]
+        }, 
+        "create": {
+            "samples" : [
+                {
+                    "description" : "Here's an example of a request for creating a specific service test. In this example the request only passes mandatory attributes.",
+                    "content-type": "application/json",
+                    "request" : "$_ServiceTest_create_1_request",
+                    "response" : "$_ServiceTest_create_1_response"
+        		}
+            ]
+        },
+        "partialupdate": {
+            "samples" : [
+                {
+                    "description" : "Here's an example of a request for patching a service test. In this example, a new state is set.",
+                    "content-type": "application/merge-patch+json",
+                    "objectId": "3112",
+                    "request" : "$_ServiceTest_partialupdate_1_request",
+                    "response" : "$_ServiceTest_partialupdate_1_response"
+        		}
+            ]
+        },
+        "delete":  {
+            "samples" : [
+                {
+                    "description" : "Here's an example of a request for deleting a service test.",
+                    "content-type": "application/json",
+                    "objectId": "3112"
+        		}
+            ]
+        }
+    },
+    "ServiceTestSpecification": {
+        "list": {
+            "samples": [
+                {
+                    "description": "Here's an example of a request for retrieving multiple service test specifications.",
+                    "fields": "description,href,id,version,name,validFor, relatedServiceSpecification", 
+                    "filtering": "name=monkey%20test", 
+                    "content-type": "application/json", 
+                    "response" : "$_ServiceTestSpecification_list_1_response"
+                }
+            ]
+        }, 
+        "retrieve": {
+            "samples" : [
+                {
+                    "description" : "Here's an example of a request for retrieving a specific service test specification.",
+                    "content-type": "application/json",
+                    "objectId": "12",
+                    "response" : "$_ServiceTestSpecification_retrieve_1_response"
+        		}
+            ]
+        }, 
+        "create": {
+            "samples" : [
+                {
+                    "description" : "Here's an example of a request for creating a specific service test specification. In this example the request only passes mandatory attributes.",
+                    "content-type": "application/json",
+                    "request" : "$_ServiceTestSpecification_create_1_request",
+                    "response" : "$_ServiceTestSpecification_create_1_response"
+        		}
+            ]
+        },
+        "partialupdate": {
+            "samples" : [
+                {
+                    "description" : "Here's an example of a request for patching a service test specification. In this example, a new version is set, together with validity period.",
+                    "content-type": "application/merge-patch+json",
+                    "objectId": "12",
+                    "request" : "$_ServiceTestSpecification_partialupdate_1_request",
+                    "response" : "$_ServiceTestSpecification_partialupdate_1_response"
+        		}
+            ]
+        },
+        "delete":  {
+            "samples" : [
+                {
+                    "description" : "Here's an example of a request for deleting a service test specification.",
+                    "content-type": "application/json",
+                    "objectId": "12"
+        		}
+            ]
+        }
+    }
+}

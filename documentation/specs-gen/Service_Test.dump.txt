@@ -1,0 +1,379 @@
+
+======= Service_Test 
+
+title: TMF653 Service Test Management API REST Specification R18.5.0
+  18: style:Heading 1 text:NOTICE
+  35: style:Heading 1 text:Table of Contents
+  56: style:Heading 1 text: LIST OF TABLES
+  60: style:Heading 1 text:INTRODUCTION
+  67: style:Heading 1 text:SAMPLE USE CASES
+    68: style:Heading 2 text:Service Test for Customer Experience Assurance
+    77: style:Heading 2 text:Planned Service Test for Importance Service 
+  80: style:Heading 1 text:Support of polymorphism and extension patterns
+  90: style:Heading 1 text:RESOURCE MODEL
+    91: style:Heading 2 text:Managed Entity and Task Resource Models
+      92: style:Heading 3 text:FIRST resource
+    94: style:Heading 2 text:Notification Resource Models
+      96: style:Heading 3 text:First Notification
+  99: style:Heading 1 text: API OPERATIONS
+    106: style:Heading 2 text:VERB  url
+  108: style:Heading 1 text:API NOTIFICATIONS
+    111: style:Heading 2 text:Register listener
+    125: style:Heading 2 text:Unregister listener
+    136: style:Heading 2 text:Publish Event to listener
+  152: style:Heading 1 text:Acknowledgements
+    153: style:Heading 2 text:Version History
+    157: style:Heading 2 text:Release History
+    161: style:Heading 2 text:Contributors to Document
+
+
+------- CONTENT ------ 
+
+3: style:Normal text:TM Forum Specification
+6: style:Normal text:Service Test Management API REST Specification
+12: style:Normal text:TMF653
+13: style:Normal text:Release 18.5.0
+14: style:Normal text:January 2019
+17: TABLE 
+  18: style:Heading 1 text:NOTICE
+  19: style:Normal text:Copyright © TM Forum 2019. All Rights Reserved.
+  21: style:Normal text:This document and translations of it may be copied and furnished to others, and derivative works that comment on or otherwise explain it or assist in its implementation may be prepared, copied, published, and distributed, in whole or in part, without restriction of any kind, provided that the above copyright notice and this section are included on all such copies and derivative works. However, this document itself may not be modified in any way, including by removing the copyright notice or references to TM FORUM, except as needed for the purpose of developing any document or deliverable produced by a TM FORUM Collaboration Project Team (in which case the rules applicable to copyrights, as set forth in the , must be followed) or as required to translate it into languages other than English.
+  23: style:Normal text:The limited permissions granted above are perpetual and will not be revoked by TM FORUM or its successors or assigns.
+  25: style:Normal text:This document and the information contained herein is provided on an "AS IS" basis and TM FORUM DISCLAIMS ALL WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO ANY WARRANTY THAT THE USE OF THE INFORMATION HEREIN WILL NOT INFRINGE ANY OWNERSHIP RIGHTS OR ANY IMPLIED WARRANTIES OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE.
+  27: style:Normal text:Direct inquiries to the TM Forum office:
+  29: style:Normal text:4 Century Drive, Suite 100
+  30: style:Normal text:Parsippany, NJ 07054, USA
+  31: style:Normal text:Tel No. +1 973 944 5100
+  32: style:Normal text:Fax No. +1 973 998 7196
+  33: style:Normal text:TM Forum Web Page: 
+  35: style:Heading 1 text:Table of Contents
+  56: style:Heading 1 text: LIST OF TABLES
+  58: style:Normal text:N/A
+  60: style:Heading 1 text:INTRODUCTION
+  61: style:Normal text:The following document is the specification of the REST API for Service Test Management. It includes the model definition as well as all available operations. Possible actions are creating, updating and retrieving Service Test. 
+  62: style:Normal text:The Service Test API provides a standardized mechanism for placing a service test with all of the necessary test parameters. The API consists of a simple set of operations that interact with CRM/Service Management systems in a consistent manner. A service test is a procedure intended to check the quality, performance, or reliability of a service. 
+  63: style:Normal text:Service Test Management API manages service test resource and service specification test resource:
+  64: style:List Paragraph text:A service test specification describes the service test in terms of parameters to be configured and measures to be taken.
+  65: style:List Paragraph text:A service exists for a controlled test invocation on a service. The service test is executed according to a schedule. and contains service test configuration parameters that are to be applied at execution time, and service test measures that result.
+  67: style:Heading 1 text:SAMPLE USE CASES
+    68: style:Heading 2 text:Service Test for Customer Experience Assurance
+    69: style:Normal text:The Service Test can be used for customer experience assurance while:
+    70: style:List Paragraph text:The subscriber can launch service test from Self Service Portal to make sure the service quality while his/her experience is not good.
+    71: style:List Paragraph text:The Call Center operator can execute service test to check the quality and analyze root cause for response while one customer has complaint 
+    73: style:List Paragraph text:It could improve customer expereice and increase FCR(First Call Resolution) much.
+    75: style:List Paragraph text:It could improve customer expereice and increase FCR(First Call Resolution) much.
+    77: style:Heading 2 text:Planned Service Test for Importance Service 
+    78: style:Normal text:The test job can be defined for some important services that the test will be executed against them periodically to assurance the service quality and find potential service downgrading in advance to avoid massive impact to customers.
+  80: style:Heading 1 text:Support of polymorphism and extension patterns
+  82: style:Normal text:Support of polymorphic collections and types and schema based extension is provided by means of a list of generic meta-attributes that we describe below. 
+  83: style:Normal text:Generic support of polymorphism and pattern extensions is described in the TMF API Guidelines v3.0 Part 2 document.
+  84: style:Normal text:The @type attribute provides a way to represent the actual class type of an entity. All resources and sub-resources of this API have a @type attributes that can be provided when this is useful. Such as ServiceTest, ServiceTestSpecification Entity. All resources and sub-resources of this API have a @type attributes that can be provided when this is useful.
+  85: style:Normal text:The @referredType can be used within reference entities (like for instance ServiceRef) to explicitly denote the actual entity type of the referred class. Notice that in reference entities the @type, when used, denotes the class types of the reference itself, such as ServiceRef, and not the class type of the referred object. However, since reference classes are rarely sub-classed, @type is generally not useful in reference objects.
+  86: style:Normal text:The @schemaLocation property can be used in resources to allow specifying user-defined properties of an Entity or to specify the expected characteristics of an entity.
+  87: style:Normal text:The @baseType attribute gives a way to provide explicitly the base of class of a given resource that has been extended.
+  88: style:Normal text:Notice that because these meta-attributes have a generic meaning we will not repeat their definition in the resource description tables of each resource and each sub-resource.
+  89: style:Normal text:
+
+  90: style:Heading 1 text:RESOURCE MODEL
+    91: style:Heading 2 text:Managed Entity and Task Resource Models
+      92: style:Heading 3 text:FIRST resource
+    94: style:Heading 2 text:Notification Resource Models
+      96: style:Heading 3 text:First Notification
+  99: style:Heading 1 text: API OPERATIONS
+  100: style:Normal text:Remember the following Uniform Contract:
+  101: TABLE 
+  103: style:Normal text:Filtering and attribute selection rules are described in the TMF REST Design Guidelines Part 1 document.
+  104: style:Normal text:Notifications are also described in a subsequent section.
+    106: style:Heading 2 text:VERB  url
+  108: style:Heading 1 text:API NOTIFICATIONS
+  109: style:Normal text:For every single of operation on the entities use the following templates and provide sample REST notification POST calls.
+  110: style:Normal text:It is assumed that the Pub/Sub uses the Register and UnRegister mechanisms described in the REST Guidelines part 1. Refer to the guidelines for more details.
+    111: style:Heading 2 text:Register listener
+    112: style:Normal text:  POST /hub
+    113: style:Normal text:Description
+    114: style:Normal text:Sets the communication endpoint address the service instance must use to deliver information about its health state, execution state, failures and metrics. Subsequent POST calls will be rejected by the service if it does not support multiple listeners. In this case DELETE /api/hub/{id} must be called before an endpoint can be created again.
+    115: style:Normal text:Behavior
+    116: style:Normal text:Returns HTTP/1.1 status code 204 if the request was successful.
+    117: style:Normal text:Returns HTTP/1.1 status code 409 if request is not successful.
+    118: style:Normal text:Usage Samples
+    119: style:Normal text:Here's an example of a request for registering a listener.
+    121: TABLE 
+    123: style:Normal text:
+
+    125: style:Heading 2 text:Unregister listener
+    126: style:Normal text:  DELETE /hub/{id}
+    127: style:Normal text:Description
+    128: style:Normal text:Clears the communication endpoint address that was set by creating the Hub.
+    129: style:Normal text:Behavior
+    130: style:Normal text:Returns HTTP/1.1 status code 204 if the request was successful.
+    131: style:Normal text:Returns HTTP/1.1 status code 404 if the resource is not found.
+    132: style:Normal text:Usage Samples
+    133: style:Normal text:Here's an example of a request for un-registering a listener.
+    134: TABLE 
+    136: style:Heading 2 text:Publish Event to listener
+    137: style:Normal text:  POST /client/listener
+    138: style:Normal text:Description
+    139: style:Normal text:Clears the communication endpoint address that was set by creating the Hub.
+    140: style:Normal text:Provides to a registered listener the description of the event that was raised. The /client/listener url is the callback url passed when registering the listener.
+    141: style:Normal text:Behavior
+    142: style:Normal text:Returns HTTP/1.1 status code 201 if the service is able to set the configuration. 
+    143: style:Normal text:Usage Samples
+    144: style:Normal text:Here's an example of a notification received by the listener. In this example "EVENT TYPE" should be replaced by one of the notification types supported by this API (see Notification resources Models section) and EVENT BODY refers to the data structure of the given notification type.
+    145: TABLE 
+    147: style:Normal text:For detailed examples on the general TM Forum notification mechanism, see the TMF REST Design Guidelines Part 1 document.
+  152: style:Heading 1 text:Acknowledgements
+    153: style:Heading 2 text:Version History
+    155: TABLE 
+    157: style:Heading 2 text:Release History
+    159: TABLE 
+    161: style:Heading 2 text:Contributors to Document
+    163: TABLE 
+
+
+------- TABLES ------ 
+
+
+table:17 ***
+
+    cell:0,0: ***
+      0: text:Latest Update: TM Forum Release 18.5.0
+    cell:0,1: ***
+      0: text:Member Evaluation
+    cell:1,0: ***
+      0: text:Version 4.0.0
+    cell:1,1: ***
+      0: text:IPR Mode: RAND
+
+table:101 ***
+
+    cell:0,0: ***
+      0: text:Operation on Entities
+    cell:0,1: ***
+      0: text:Uniform API Operation
+    cell:0,2: ***
+      0: text:Description
+    cell:1,0: ***
+      0: text:Query Entities
+    cell:1,1: ***
+      0: text:GET Resource
+    cell:1,2: ***
+      0: text:GET must be used to retrieve a representation of a resource.
+      1: text:
+    cell:2,0: ***
+      0: text:Create Entity
+    cell:2,1: ***
+      0: text:POST Resource
+    cell:2,2: ***
+      0: text:POST must be used to create a new resource
+    cell:3,0: ***
+      0: text:Partial Update of an Entity
+    cell:3,1: ***
+      0: text:PATCH Resource
+    cell:3,2: ***
+      0: text:PATCH must be used to partially update a resource
+    cell:4,0: ***
+      0: text:Complete Update of an Entity
+    cell:4,1: ***
+      0: text:PUT Resource
+    cell:4,2: ***
+      0: text:PUT must be used to completely update a resource identified by its resource URI 
+    cell:5,0: ***
+      0: text:Remove an Entity
+    cell:5,1: ***
+      0: text:DELETE Resource
+    cell:5,2: ***
+      0: text:DELETE must be used to remove a resource
+    cell:6,0: ***
+      0: text:Execute an Action on an Entity 
+    cell:6,1: ***
+      0: text:POST on TASK Resource
+    cell:6,2: ***
+      0: text:POST must be used to execute Task Resources
+    cell:7,0: ***
+      0: text:Other Request Methods
+    cell:7,1: ***
+      0: text:POST on TASK Resource
+    cell:7,2: ***
+      0: text:GET and POST must not be used to tunnel other request methods.
+
+table:121 ***
+
+    cell:0,0: ***
+      0: text:
+Request
+
+    cell:1,0: ***
+      0: text:POST /api/hub
+      1: text:Accept: application/json
+      2: text:
+      3: text:{"callback": "http://in.listener.com"}
+
+    cell:2,0: ***
+      0: text:
+Response
+
+    cell:3,0: ***
+      0: text:201
+      1: text:Content-Type: application/json
+      2: text:Location: /api/hub/42
+      3: text:
+      4: text:{"id":"42","callback":"http://in.listener.com","query":null}
+      5: text:
+
+table:134 ***
+
+    cell:0,0: ***
+      0: text:
+Request
+
+    cell:1,0: ***
+      0: text:DELETE /api/hub/42
+      1: text:Accept: application/json
+
+    cell:2,0: ***
+      0: text:
+Response
+
+    cell:3,0: ***
+      0: text:204
+
+table:145 ***
+
+    cell:0,0: ***
+      0: text:
+Request
+
+    cell:1,0: ***
+      0: text:POST /client/listener
+      1: text:Accept: application/json
+      2: text:
+      3: text:{
+      4: text:    "event": { 
+      5: text:                EVENT BODY 
+      6: text:            },
+      7: text:    "eventType": "EVENT_TYPE"
+      8: text:}
+
+    cell:2,0: ***
+      0: text:
+Response
+
+    cell:3,0: ***
+      0: text:201
+
+table:155 ***
+
+    cell:0,0: ***
+      0: text:Release Number
+    cell:0,1: ***
+      0: text:Date 
+    cell:0,2: ***
+      0: text:Release led by:
+    cell:0,3: ***
+      0: text:Description 
+    cell:1,0: ***
+      0: text:Release 1.0.0
+    cell:1,1: ***
+      0: text:11/28/2016 
+    cell:1,2: ***
+      0: text:Pierre Gauthier
+    cell:1,3: ***
+      0: text:
+    cell:2,0: ***
+      0: text:Release 2.0.0
+    cell:2,1: ***
+      0: text:28-Feb-2018
+    cell:2,2: ***
+      0: text:Hongxia Hao
+      1: text:
+    cell:2,3: ***
+      0: text:Main change points:
+      1: text:1.Remove mandatory and non-mandatory related description to Conformance Profile document.
+      2: text:2. Align with DG 3.0 , but no hypermedia
+      3: text:3. Modify some names like RelatedClassRef (suggested by Mariano)
+      4: text:4.Modify some typos
+    cell:3,0: ***
+      0: text:Release 2.1.0
+    cell:3,1: ***
+      0: text:06-Dec-2018
+    cell:3,2: ***
+      0: text:Hongxia Hao
+    cell:3,3: ***
+      0: text:Updated to TM Forum new brand guidelines.
+    cell:4,0: ***
+      0: text:Release 2.1.1
+    cell:4,1: ***
+      0: text:27-Jun-2018
+    cell:4,2: ***
+      0: text:Adrienne Walcott
+    cell:4,3: ***
+      0: text:Formatting/style edits prior to R18 publishing.
+    cell:5,0: ***
+      0: text:Release 4.0
+    cell:5,1: ***
+      0: text:13-Jan-2019
+    cell:5,2: ***
+      0: text:Jonathan Goldberg
+      1: text:
+    cell:5,3: ***
+      0: text:Schema alignment for NaaS APIs
+
+table:159 ***
+
+    cell:0,0: ***
+      0: text:Release Number
+    cell:0,1: ***
+      0: text:Date 
+    cell:0,2: ***
+      0: text:Release led by:
+    cell:0,3: ***
+      0: text:Description 
+    cell:1,0: ***
+      0: text:16.5.0
+    cell:1,1: ***
+      0: text:December 2016
+    cell:1,2: ***
+      0: text:Yisong Jiang in HUAWEI
+      1: text:Pierre Gauthier
+    cell:1,3: ***
+      0: text:Initial Release
+    cell:2,0: ***
+      0: text:18.0.0
+    cell:2,1: ***
+      0: text:June 2018
+    cell:2,2: ***
+      0: text:Hongxia Hao
+      1: text: 
+    cell:2,3: ***
+      0: text:Updated Release
+    cell:3,0: ***
+      0: text:18.5.0
+    cell:3,1: ***
+      0: text:13-Jan-2019
+    cell:3,2: ***
+      0: text:Jonathan Goldberg
+    cell:3,3: ***
+      0: text:Schema alignment for NaaS APIs
+
+table:163 ***
+
+    cell:0,0: ***
+      0: text:Hongxia Hao
+    cell:0,1: ***
+      0: text:Huawei
+    cell:1,0: ***
+      0: text:Yisong Jiang
+    cell:1,1: ***
+      0: text:Huawei
+    cell:2,0: ***
+      0: text:Mariano Belaunde
+    cell:2,1: ***
+      0: text:Orange
+    cell:3,0: ***
+      0: text:Pierre Gauthier
+    cell:3,1: ***
+      0: text:TM Forum
+    cell:4,0: ***
+      0: text:Jonathan Goldberg
+    cell:4,1: ***
+      0: text:Amdocs

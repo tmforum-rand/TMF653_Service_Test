@@ -1,0 +1,17 @@
+{
+    "description:": "This service test is a simple one", 
+    "endDateTime": "2016-03-02T24:00:00", 
+    "mode": "PROACTIVE",
+    "startDateTime": "2016-03-02T00:00:00",
+    "state": "In Progress",
+    "relatedService": {
+        "href": "https://mycsp.com:8080/tmf-api/serviceManagement/v4/service/21", 
+        "id": "21", 
+        "name": "gameService"
+    },
+    "testSpecification":{
+        "href": "https://mycsp.com:8080/tmf-api/serviceTestManagement/v4/serviceTestSpecification/22",
+        "id": "22",
+        "@referredType": "PerformanceTestSpecification"
+    }
+}

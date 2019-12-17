@@ -1,0 +1,11 @@
+{
+    "description": "This  service test specification ...", 
+    "href": "https:/host:port/tmf-api/serviceTestSpecification/v1/serviceTestSpecification/7145", 
+    "id": "7145", 
+    "name": "a string ...", 
+    "relatedServiceSpecification": {}, 
+    "testMeasureDefinition": [
+        {}
+    ], 
+    "validFor": {}
+}

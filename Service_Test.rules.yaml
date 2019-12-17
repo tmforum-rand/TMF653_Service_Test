@@ -1,0 +1,29 @@
+## API rule definitions
+
+api 'Service Test Management':
+  doc: "## TMF API Reference: TMF656 - Service Test Management\n\n### Release : 18.5 - December 2018\n\nService Test Management API goal is to provide the ability to manage tests of provisioned Services. \n\n### Resource \n- ServiceTest \n- ServiceTestSpecification\n\n### Operations\nService Test Management API performs the following operations on the resources :\n- Retrieve an entity or a collection of entities depending on filter criteria\n- Partial update of an entity (including updating rules)\n- Create an entity (including default values and creation rules)\n- Delete an entity (for administration purposes)\n- Manage notification of events"
+  hostUrl: "https://serverRoot"
+  basePath: "/tmf-api/serviceTestManagement/v4/"
+  version: "4.0.0"
+  flavors: regular
+  resources:
+    - ServiceTest
+    - ServiceTestSpecification
+  ## ServiceTest
+  rules ServiceTest:
+    operations: GET,POST,PATCH,DELETE
+    mandatory in post: name,relatedService,testSpecification
+    patchable: ALL EXCEPT href,id
+    notifications:
+      - create
+      - attributeValueChange
+      - delete
+  ## ServiceTestSpecification
+  rules ServiceTestSpecification:
+    operations: GET,POST,PATCH,DELETE
+    mandatory in post: name,relatedServiceSpecification
+    patchable: ALL EXCEPT href,id,validFor
+    notifications:
+      - create
+      - attributeValueChange
+      - delete

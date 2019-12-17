@@ -1,0 +1,18 @@
+{
+    "characteristic": [
+        {}
+    ], 
+    "description": "This  service test ...", 
+    "endDateTime": "2018-11-22T00:00", 
+    "href": "https:/host:port/tmf-api/serviceTest/v1/serviceTest/9756", 
+    "id": "9756", 
+    "mode": "a string ...", 
+    "name": "a string ...", 
+    "relatedService": {}, 
+    "startDateTime": "2018-11-22T00:00", 
+    "state": "a string ...", 
+    "testMeasure": [
+        {}
+    ], 
+    "testSpecification": {}
+}
